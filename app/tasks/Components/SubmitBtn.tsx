@@ -6,12 +6,16 @@ function SubmitBtn() {
     return (
         <>
             {pending ? (
-                <button className="btn btn-disabled" disabled={pending}>
+                <button
+                    type="submit"
+                    className="btn btn-disabled"
+                    disabled={pending}
+                >
                     <span className="loading loading-spinner"></span>
                     Creating...
                 </button>
             ) : (
-                <button className="btn btn-secondary btn-outline">
+                <button type="submit" className="btn btn-secondary btn-outline">
                     Create Task
                 </button>
             )}

@@ -1,17 +1,27 @@
 "use client";
 
-import { createTask } from "@/utils/actions";
 import SubmitBtn from "./SubmitBtn";
-import FormState from "./FormState";
-import { useFormState } from "react-dom";
+import { useRef } from "react";
+import axios from "axios";
 
-function Form() {
-    const initialState = { status: "", msg: "" };
+function Form({ setTask }) {
+    const Form = useRef<HTMLFormElement | null>(null);
 
-    const [state, formAction]: any = useFormState(createTask, initialState);
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        if (Form.current) {
+            const formData = Object.fromEntries(new FormData(Form.current));
+            console.log(formData);
+
+            const res = await axios.post("api/tasks", formData);
+            console.log({ res });
+            setTask(res);
+        }
+    };
 
     return (
-        <form action={formAction} className=" grid gap-[1vh]">
+        <form ref={Form} className=" grid gap-[1vh]" onSubmit={handleSubmit}>
             <input
                 type="text"
                 name="title"
@@ -111,7 +121,6 @@ function Form() {
             </div>
 
             <SubmitBtn />
-            <FormState state={state} />
         </form>
     );
 }

@@ -1,41 +1,48 @@
 import { getAllTasks } from "@/utils/actions";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Complated from "./Complated";
 import EditTask from "./EditTask";
+import DeleteTask from "./DeleteTask";
 
-async function TaskList() {
-    const tasks = await getAllTasks();
+function TaskList({ task }: any) {
+    const [tasks, setTasks] = useState<[]>([]);
+    console.log(tasks);
+
+    useEffect(() => {
+        setTasks(task);
+    }, [task]);
 
     return (
         <ul>
-            {tasks.map((task) => {
+            {/* {tasks.map((item: any) => {
                 return (
-                    <li key={task.id}>
+                    <li key={item.id}>
                         <details className="dropdown w-full">
                             <summary className="m-1 btn w-full flex justify-start">
                                 <Complated
-                                    id={task.id}
-                                    complated={task.complated}
+                                    id={item.id}
+                                    complated={item.complated}
                                 />
                                 <p
                                     className={`${
-                                        task.complated &&
+                                        item.complated &&
                                         " line-through text-gray-300"
                                     }`}
                                 >
-                                    {task.title}
+                                    {item.title}
                                 </p>
-                                <EditTask id={task.id} />
+                                <EditTask id={item.id} />
+                                <DeleteTask id={item.id} />
                             </summary>
                             <ul className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52">
                                 <li>
-                                    <a>{task.details}</a>
+                                    <a>{item.details}</a>
                                 </li>
                             </ul>
                         </details>
                     </li>
                 );
-            })}
+            })} */}
         </ul>
     );
 }

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "./Components/Header";
+import Providers from "./providers";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,10 +19,12 @@ export default function RootLayout({
     return (
         <html lang="en" data-theme="bumblebee">
             <body className={inter.className}>
-                <div className="py-[2vh] px-[4vw]">
-                    <Header />
-                    {children}
-                </div>
+                <Providers>
+                    <div className="py-[2vh] px-[4vw]">
+                        <Header />
+                        {children}
+                    </div>
+                </Providers>
             </body>
         </html>
     );

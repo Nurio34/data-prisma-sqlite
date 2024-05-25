@@ -3,6 +3,7 @@
 import { updateComplated } from "@/utils/actions";
 import React, { useEffect, useRef, useState } from "react";
 import { useFormState } from "react-dom";
+import toast from "react-hot-toast";
 
 function Complated({ id, complated }: { id: string; complated: boolean }) {
     const initialState = { status: "", msg: "" };
@@ -12,6 +13,8 @@ function Complated({ id, complated }: { id: string; complated: boolean }) {
         initialState,
     );
 
+    const { status, msg } = state;
+
     const SubmitBtn = useRef<HTMLButtonElement | null>(null);
 
     const submitForm = () => {
@@ -20,21 +23,16 @@ function Complated({ id, complated }: { id: string; complated: boolean }) {
         }
     };
 
-    const [msg, setMsg] = useState<string>(state.msg);
-
     useEffect(() => {
-        setMsg(state.msg);
-
-        const time = setTimeout(() => {
-            setMsg("");
-        }, 1000);
-
-        return () => clearTimeout(time);
+        if (status === "success") {
+            toast.success(msg);
+        } else if (status === "error") {
+            toast.error(msg);
+        }
     }, [state]);
 
     return (
         <form action={formAction}>
-            {msg && <p>{msg}</p>}
             <label htmlFor="complated">
                 <input
                     type="checkbox"
